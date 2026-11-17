@@ -1,0 +1,136 @@
+/* 눈부심을 줄인 밝은 톤의 색상 변수 */
+:root {
+  --bg: #e9ecf1;
+  --surface: #f5f6f9;
+  --surface_hover: #eef0f5;
+  --border: #d9dde5;
+  --text: #2b2f38;
+  --text_muted: #8a909c;
+  --accent: #5b6cf0;
+  --accent_hover: #4a5ae0;
+  --danger: #e0626b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 64px 16px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+}
+
+.card {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(40, 50, 80, 0.06);
+}
+
+.card_header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+h1 { margin: 0; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+
+.count { color: var(--text_muted); font-size: 0.875rem; }
+
+.todo_form { display: flex; gap: 8px; margin-bottom: 16px; }
+
+.todo_form input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.todo_form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(91, 108, 240, 0.15);
+}
+
+.todo_form button {
+  padding: 0 18px;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.todo_form button:hover { background: var(--accent_hover); }
+
+.todo_list { list-style: none; margin: 0; padding: 0; }
+
+.todo_item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--border);
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.todo_item:last-child { border-bottom: none; }
+.todo_item:hover { background: var(--surface_hover); }
+
+.todo_item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.todo_text { flex: 1; word-break: break-word; }
+
+.todo_item.done .todo_text {
+  color: var(--text_muted);
+  text-decoration: line-through;
+}
+
+.delete_button {
+  padding: 4px 8px;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--text_muted);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.todo_item:hover .delete_button,
+.delete_button:focus { opacity: 1; }
+.delete_button:hover { color: var(--danger); }
+
+/* 터치 기기에서는 삭제 버튼 항상 표시 */
+@media (hover: none) {
+  .delete_button { opacity: 1; }
+}
+
+.empty {
+  margin: 24px 0 8px;
+  text-align: center;
+  color: var(--text_muted);
+}

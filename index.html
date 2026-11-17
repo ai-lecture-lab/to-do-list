@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>할일 목록</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="card">
+    <header class="card_header">
+      <h1>할일 목록</h1>
+      <span id="count_label" class="count"></span>
+    </header>
+
+    <form id="todo_form" class="todo_form">
+      <input id="todo_input" type="text" placeholder="할일을 입력하세요" autocomplete="off" maxlength="200" required>
+      <button type="submit">추가</button>
+    </form>
+
+    <ul id="todo_list" class="todo_list"></ul>
+    <p id="empty_message" class="empty">할일이 없습니다.</p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

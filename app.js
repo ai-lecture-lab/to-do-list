@@ -5,14 +5,19 @@ const todo_form = document.getElementById("todo_form");
 const todo_input = document.getElementById("todo_input");
 const todo_list = document.getElementById("todo_list");
 const empty_message = document.getElementById("empty_message");
-const count_label = document.getElementById("count_label");
 const progress_fill = document.getElementById("progress_fill");
-const progress_ring = document.getElementById("progress_ring");
 const progress_text = document.getElementById("progress_text");
-const today_label = document.getElementById("today_label");
+const progress_badge = document.getElementById("progress_badge");
+const total_value = document.getElementById("total_value");
+const done_value = document.getElementById("done_value");
+const remain_value = document.getElementById("remain_value");
 
-// 오늘 날짜 표시
-today_label.textContent = new Date().toLocaleDateString("ko-KR", { month: "long", day: "numeric", weekday: "long" });
+// 오늘 날짜 표시 (홈 시계와 같은 형식)
+const week_days = ["일", "월", "화", "수", "목", "금", "토"];
+const now_date = new Date();
+document.getElementById("date_day").textContent = `${now_date.getMonth() + 1}/${now_date.getDate()}`;
+document.getElementById("date_text").textContent =
+  `${now_date.getFullYear()}년 ${now_date.getMonth() + 1}월 ${now_date.getDate()}일 (${week_days[now_date.getDay()]})`;
 
 // 저장된 할일 목록 불러오기 (실패 시 빈 배열)
 function load_todos() {
@@ -58,7 +63,11 @@ function render_todos() {
     delete_button.setAttribute("aria-label", "삭제");
     delete_button.addEventListener("click", () => delete_todo(todo_item.id));
 
-    list_item.append(check_box, text_span, delete_button);
+    const status_chip = document.createElement("span");
+    status_chip.className = "status_chip";
+    status_chip.textContent = todo_item.done ? "완료" : "진행 중";
+
+    list_item.append(check_box, text_span, status_chip, delete_button);
     todo_list.appendChild(list_item);
   });
 
@@ -67,15 +76,17 @@ function render_todos() {
   const done_count = todo_items.filter((todo_item) => todo_item.done).length;
   const remain_count = total_count - done_count;
   empty_message.hidden = total_count > 0;
-  count_label.textContent = total_count
-    ? (remain_count ? `남은 할일 ${remain_count}개 · 완료 ${done_count}개` : "모두 완료했어요! 🎉")
-    : "할일을 추가해 보세요";
+  total_value.textContent = total_count;
+  done_value.textContent = done_count;
+  remain_value.textContent = remain_count;
 
   // 진행률 표시
   const percent_value = total_count ? Math.round((done_count / total_count) * 100) : 0;
   progress_fill.style.width = percent_value + "%";
-  progress_ring.style.setProperty("--percent", percent_value);
-  progress_text.textContent = percent_value + "%";
+  progress_badge.textContent = percent_value + "%";
+  progress_text.textContent = total_count && !remain_count
+    ? "모두 완료했어요! 🎉"
+    : `전체 진행률 ${percent_value}%`;
 }
 
 // 할일 추가
